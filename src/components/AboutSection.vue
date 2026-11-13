@@ -14,7 +14,7 @@ import PillButton from './PillButton.vue'
           <span class="idx">0{{ i + 1 }}</span>
           <h3>{{ a.title }}</h3>
           <p>{{ a.text }}</p>
-          <PillButton v-if="i === 2" dark label="Get to know me" href="#contact" />
+          <PillButton v-if="i === 2" dark label="Get to know me" href="boatengjohnson124@gmail.com" />
         </div>
       </article>
     </div>
