@@ -3,10 +3,10 @@ export const site = {
   firstName: 'Johnson',
   lastName: 'Boateng',
   intro: "I'm an application security engineer and developer in Accra, building software that is secure by design and a pleasure to use.",
-  heroImage: '/images/hero.svg',
+  heroImage: '/images/img1.jpg',
   aboutImage: '/images/about.svg',
-  journeyImage: '/images/journey.svg',
-  badgeText: 'Based in Accra Ghana • Meet the senior software engineer • ',
+  journeyImage: '/images/img2.jpg',
+  badgeText: 'Based in Accra • Security Engineer • ', 
   phone: '0208839211',
   email: 'boatengjohnson124@gmail.com',
 }

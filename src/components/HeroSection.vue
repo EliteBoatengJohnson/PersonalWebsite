@@ -7,7 +7,6 @@ const { scrollY } = useScroll()
 const loaded = ref(false)
 onMounted(() => requestAnimationFrame(() => (loaded.value = true)))
 
-// Parallax offset, capped so nothing drifts after the hero leaves the screen.
 const style = computed(() => ({ '--sy': Math.min(scrollY.value, 900) }))
 </script>
 
@@ -17,7 +16,6 @@ const style = computed(() => ({ '--sy': Math.min(scrollY.value, 900) }))
       <li v-for="s in socials" :key="s.label"><a :href="s.href">{{ s.label }}</a></li>
     </ul>
 
-    <!-- wrapper = scroll parallax, img = load-in animation -->
     <div class="img-wrap">
       <img class="hero-img" :src="site.heroImage" :alt="`${site.firstName} ${site.lastName}`" />
     </div>
@@ -53,16 +51,24 @@ const style = computed(() => ({ '--sy': Math.min(scrollY.value, 900) }))
 .loaded .socials li:nth-child(3) { transition-delay: 0.2s; }
 .loaded .socials li:nth-child(4) { transition-delay: 0.3s; }
 
+/* ---- Circular photo ---- */
 .img-wrap {
-  position: absolute; left: 12%; bottom: 0; height: 88%; max-width: 52%; z-index: 1;
+  position: absolute; left: 14%; bottom: 12%; z-index: 1;
+  width: clamp(240px, 28vw, 420px);
+  height: clamp(240px, 28vw, 420px);   /* same value as width = perfect circle */
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--butter);
   transform: translate3d(0, calc(var(--sy) * 0.14px), 0);
 }
-.hero-img {
-  height: 100%; width: auto; max-width: 100%; display: block; object-fit: contain; object-position: bottom;
-  opacity: 0; transform: translate3d(0, 60px, 0) scale(1.04);
+.img-wrap .hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: center 20%;
+  opacity: 0; transform: scale(1.15);
   transition: opacity 1.2s var(--ease), transform 1.4s var(--ease);
 }
-.loaded .hero-img { opacity: 1; transform: none; }
+.loaded .img-wrap .hero-img { opacity: 1; transform: none; }
 
 .badge {
   position: absolute; left: 34px; bottom: 40px; width: 120px; height: 120px; z-index: 3;
@@ -70,7 +76,7 @@ const style = computed(() => ({ '--sy': Math.min(scrollY.value, 900) }))
 }
 .loaded .badge { opacity: 1; }
 .badge svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 18s linear infinite; }
-.badge text { font-size: 11px; fill: var(--butter); letter-spacing: 1px; }
+.badge text { font-size: 10px; fill: var(--butter); letter-spacing: 1px; }
 .badge span { font-size: 28px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -97,7 +103,11 @@ h1 { font-size: clamp(72px, 11vw, 160px); font-weight: 800; letter-spacing: -0.0
 
 @media (max-width: 900px) {
   .socials { display: none; }
-  .img-wrap { left: -8%; max-width: 100%; height: 70%; }
+  .img-wrap {
+    left: 50%; top: 110px; bottom: auto;
+    width: min(70vw, 300px); height: min(70vw, 300px);
+    transform: translate3d(-50%, calc(var(--sy) * 0.14px), 0);
+  }
   .hero-copy { left: 20px; right: 20px; bottom: 24px; }
   .intro { font-size: 16px; }
 }
